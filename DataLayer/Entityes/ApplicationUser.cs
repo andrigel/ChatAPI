@@ -5,6 +5,6 @@ namespace DataLayer.Entityes
 {
     public class ApplicationUser : IdentityUser
     {
-        public List<UserConversation> UserConversations { get; set; }
+        public List<UserChat> UserChats { get; set; }
     }
 }

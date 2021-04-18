@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Entityes
 {
-    public class UserConversation
+    public class UserChat
     {
         [Key]
         Guid Id { get; set; }
         public virtual ApplicationUser User { get; set;}
-        public virtual Conversation Conversation { get; set; }
+        public virtual Chat Conversation { get; set; }
         public string UserId { get; set; }
         public Guid ConversationId { get; set; }
     }

@@ -15,6 +15,7 @@ namespace DataLayer
             Random rand = new Random();
             if (!context.Conversations.Any())
             {
+
                 context.SaveChanges();
             }
         }
@@ -22,8 +23,8 @@ namespace DataLayer
         {
             if(userManager.Users.ToList().Count == 0)
             {
-                await userManager.CreateAsync(new ApplicationUser { Email = "1", UserName = "1" });
-                await userManager.CreateAsync(new ApplicationUser { Email = "2", UserName = "2" });
+                await userManager.CreateAsync(new ApplicationUser { Email = "1", UserName = "1" },"1Qwer_");
+                await userManager.CreateAsync(new ApplicationUser { Email = "2", UserName = "2" },"2Qwer_");
             }
             return true;
         }
