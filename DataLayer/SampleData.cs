@@ -13,7 +13,7 @@ namespace DataLayer
         public static void InitConversations(EFDBContext context)
         {
             Random rand = new Random();
-            if (!context.Conversations.Any())
+            if (!context.Chats.Any())
             {
 
                 context.SaveChanges();

@@ -47,15 +47,14 @@ namespace DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Conversations",
+                name: "Chats",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsGroup = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Conversations", x => x.Id);
+                    table.PrimaryKey("PK_Chats", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,9 +168,11 @@ namespace DataLayer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ChatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsAnswerForId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsAnswerForId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletedForOwner = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,9 +184,9 @@ namespace DataLayer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Messages_Conversations_Id",
-                        column: x => x.Id,
-                        principalTable: "Conversations",
+                        name: "FK_Messages_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -197,25 +198,25 @@ namespace DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserConversations",
+                name: "UserChats",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ChatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserConversations", x => new { x.ConversationId, x.UserId });
+                    table.PrimaryKey("PK_UserChats", x => new { x.ChatId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_UserConversations_AspNetUsers_UserId",
+                        name: "FK_UserChats_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserConversations_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
+                        name: "FK_UserChats_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -265,13 +266,18 @@ namespace DataLayer.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_ChatId",
+                table: "Messages",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Messages_IsAnswerForId",
                 table: "Messages",
                 column: "IsAnswerForId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserConversations_UserId",
-                table: "UserConversations",
+                name: "IX_UserChats_UserId",
+                table: "UserChats",
                 column: "UserId");
         }
 
@@ -296,7 +302,7 @@ namespace DataLayer.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "UserConversations");
+                name: "UserChats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -305,7 +311,7 @@ namespace DataLayer.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Conversations");
+                name: "Chats");
         }
     }
 }

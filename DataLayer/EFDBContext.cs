@@ -11,8 +11,8 @@ namespace DataLayer
     {
         public DbSet<Message> Messages { get; set; }
         public DbSet<ApplicationUser> ApplicationsUsers { get; set; }
-        public DbSet<Chat> Conversations { get; set; }
-        public DbSet<UserChat> UserConversations { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<UserChat> UserChats { get; set; }
         public EFDBContext(DbContextOptions<EFDBContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,13 +25,13 @@ namespace DataLayer
                 .HasKey(c => c.Id);
 
             modelBuilder.Entity<UserChat>()
-                .HasKey(uc => new { uc.ConversationId, uc.UserId });
+                .HasKey(uc => new { uc.ChatId, uc.UserId });
 
 
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Chat)
                 .WithMany(c => c.Messages)
-                .HasForeignKey(m => m.Id);
+                .HasForeignKey(m => m.ChatId);
 
             modelBuilder.Entity<UserChat>()
                 .HasOne(uc => uc.User)
@@ -39,9 +39,9 @@ namespace DataLayer
                 .HasForeignKey(uc => uc.UserId);
 
             modelBuilder.Entity<UserChat>()
-                .HasOne(uc => uc.Conversation)
+                .HasOne(uc => uc.Chat)
                 .WithMany(c => c.UserChats)
-                .HasForeignKey(uc => uc.ConversationId);
+                .HasForeignKey(uc => uc.ChatId);
         }
     }
             

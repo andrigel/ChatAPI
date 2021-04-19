@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(EFDBContext))]
-    [Migration("20210418142311_Init1")]
-    partial class Init1
+    [Migration("20210419133542_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,30 +86,37 @@ namespace DataLayer.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("DataLayer.Entityes.Conversation", b =>
+            modelBuilder.Entity("DataLayer.Entityes.Chat", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsGroup")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Conversations");
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("DataLayer.Entityes.Message", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("DeletedForOwner")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("IsAnswerForId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
@@ -118,24 +125,26 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("ChatId");
+
                     b.HasIndex("IsAnswerForId");
 
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("DataLayer.Entityes.UserConversation", b =>
+            modelBuilder.Entity("DataLayer.Entityes.UserChat", b =>
                 {
-                    b.Property<Guid>("ConversationId")
+                    b.Property<Guid>("ChatId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ConversationId", "UserId");
+                    b.HasKey("ChatId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserConversations");
+                    b.ToTable("UserChats");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -275,9 +284,9 @@ namespace DataLayer.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
-                    b.HasOne("DataLayer.Entityes.Conversation", "Conversation")
+                    b.HasOne("DataLayer.Entityes.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -287,26 +296,26 @@ namespace DataLayer.Migrations
 
                     b.Navigation("Author");
 
-                    b.Navigation("Conversation");
+                    b.Navigation("Chat");
 
                     b.Navigation("IsAnswerFor");
                 });
 
-            modelBuilder.Entity("DataLayer.Entityes.UserConversation", b =>
+            modelBuilder.Entity("DataLayer.Entityes.UserChat", b =>
                 {
-                    b.HasOne("DataLayer.Entityes.Conversation", "Conversation")
-                        .WithMany("UserConversations")
-                        .HasForeignKey("ConversationId")
+                    b.HasOne("DataLayer.Entityes.Chat", "Chat")
+                        .WithMany("UserChats")
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DataLayer.Entityes.ApplicationUser", "User")
-                        .WithMany("UserConversations")
+                        .WithMany("UserChats")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Conversation");
+                    b.Navigation("Chat");
 
                     b.Navigation("User");
                 });
@@ -364,14 +373,14 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Entityes.ApplicationUser", b =>
                 {
-                    b.Navigation("UserConversations");
+                    b.Navigation("UserChats");
                 });
 
-            modelBuilder.Entity("DataLayer.Entityes.Conversation", b =>
+            modelBuilder.Entity("DataLayer.Entityes.Chat", b =>
                 {
                     b.Navigation("Messages");
 
-                    b.Navigation("UserConversations");
+                    b.Navigation("UserChats");
                 });
 #pragma warning restore 612, 618
         }

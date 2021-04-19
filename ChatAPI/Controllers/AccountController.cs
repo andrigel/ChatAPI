@@ -28,18 +28,17 @@ namespace ChatAPI.Controllers
         {
             _accountRep = accountRep;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpPost("Auth")]
         public async Task<IActionResult> Auth(LoginViewModel model)
         {
-            ApplicationUser u = await _userManager.FindByEmailAsync(model.Email);
+            var u = await _userManager.FindByEmailAsync(model.Email);
             if (u == null) return NotFound();
-
+            
             var result = await _signInManager.PasswordSignInAsync(u.UserName, model.Password, false, false);
             if (!result.Succeeded) return BadRequest();
-
-            var userRoles = await _userManager.GetRolesAsync(u);
 
             var claims = new List<Claim>
             {
@@ -50,23 +49,22 @@ namespace ChatAPI.Controllers
 
             var now = DateTime.UtcNow;
 
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
-                                            SecurityAlgorithms.HmacSha256));
+             var jwt = new JwtSecurityToken(
+                     issuer: AuthOptions.ISSUER,
+                     audience: AuthOptions.AUDIENCE,
+                     notBefore: now,
+                     claims: claims,
+                     expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(),
+                                             SecurityAlgorithms.HmacSha256));
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             var response = new
             {
                 access_token = "Bearer " + encodedJwt,
                 userId = u.Id,
                 username = u.UserName,
-                userRole = (await _userManager.GetRolesAsync(u)).Single(),
                 userEmail = u.Email
             };
             return Json(response);

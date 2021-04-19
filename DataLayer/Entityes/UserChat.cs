@@ -12,8 +12,8 @@ namespace DataLayer.Entityes
         [Key]
         Guid Id { get; set; }
         public virtual ApplicationUser User { get; set;}
-        public virtual Chat Conversation { get; set; }
+        public virtual Chat Chat { get; set; }
         public string UserId { get; set; }
-        public Guid ConversationId { get; set; }
+        public Guid ChatId { get; set; }
     }
 }
