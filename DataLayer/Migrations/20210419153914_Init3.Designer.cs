@@ -4,14 +4,16 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(EFDBContext))]
-    partial class EFDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210419153914_Init3")]
+    partial class Init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,9 +92,6 @@ namespace DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Chats");
@@ -116,12 +115,6 @@ namespace DataLayer.Migrations
                     b.Property<Guid?>("IsAnswerForId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LastModify")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Reciever")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
@@ -133,6 +126,8 @@ namespace DataLayer.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("IsAnswerForId");
 
                     b.ToTable("Messages");
                 });
@@ -295,9 +290,15 @@ namespace DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataLayer.Entityes.Message", "IsAnswerFor")
+                        .WithMany()
+                        .HasForeignKey("IsAnswerForId");
+
                     b.Navigation("Author");
 
                     b.Navigation("Chat");
+
+                    b.Navigation("IsAnswerFor");
                 });
 
             modelBuilder.Entity("DataLayer.Entityes.UserChat", b =>

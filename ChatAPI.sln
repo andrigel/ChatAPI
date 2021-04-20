@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatAPI", "ChatAPI\ChatAPI.csproj", "{95589758-6134-4A96-8E56-445602C7CBB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatAPI", "ChatAPI\ChatAPI.csproj", "{95589758-6134-4A96-8E56-445602C7CBB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{9F7CD334-206A-42F3-80C3-EAF0AF5FDC2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer\DataLayer.csproj", "{9F7CD334-206A-42F3-80C3-EAF0AF5FDC2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{81A2237C-71ED-4CE4-994E-A1064DB48516}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{81A2237C-71ED-4CE4-994E-A1064DB48516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\ViewModels.csproj", "{8D7417B0-86E5-4BC5-8912-EE08CDD1D945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "ViewModels\ViewModels.csproj", "{8D7417B0-86E5-4BC5-8912-EE08CDD1D945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Implementations", "Services.Implementations\Services.Implementations.csproj", "{98B1FB68-A811-48CF-A84B-87823A410225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Implementations", "Services.Implementations\Services.Implementations.csproj", "{98B1FB68-A811-48CF-A84B-87823A410225}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automapper.Models", "Automapper.Models\Automapper.Models.csproj", "{DA00A304-5307-45A9-8A14-B2E5AB5120E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{98B1FB68-A811-48CF-A84B-87823A410225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B1FB68-A811-48CF-A84B-87823A410225}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B1FB68-A811-48CF-A84B-87823A410225}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA00A304-5307-45A9-8A14-B2E5AB5120E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA00A304-5307-45A9-8A14-B2E5AB5120E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA00A304-5307-45A9-8A14-B2E5AB5120E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA00A304-5307-45A9-8A14-B2E5AB5120E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

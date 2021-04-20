@@ -1,8 +1,6 @@
-﻿using DataLayer.Entityes;
+﻿using Automapper.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Interfaces
@@ -13,6 +11,6 @@ namespace Services.Interfaces
         public Task AddUser(Guid chatId, string userId);
         public Task AddMessage(Guid chatId,string text, string authorId, Guid? isAnswerFor = null);
         public Task DeleteChat(Guid chatId);
-        public Task<List<Message>> GetMessagesForUser(string userId,Guid chatId,int howMany = 20,int part = 0);
+        public Task<List<MessageModel>> GetMessagesForUser(string userId,Guid chatId,int howMany = 20,int part = 0);
     }
 }

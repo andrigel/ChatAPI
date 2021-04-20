@@ -9,7 +9,8 @@ namespace Services.Interfaces
 {
     public interface IMessageRepository
     {
-        public Task DeleteForOwner(Guid messageId);
-        public Task DeleteForAnybody(Guid messageId);
+        public Task DeleteForOwner(Guid messageId, string userId);
+        public Task DeleteForAnybody(Guid messageId, string userId);
+        public Task UpdateMessage(Guid messageId, string userId, string newText);
     }
 }

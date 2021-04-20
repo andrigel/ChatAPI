@@ -22,6 +22,8 @@ namespace AirlineAPI
                 var context = services.GetRequiredService<EFDBContext>();
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 await SampleData.InitUsers(userManager);
+                SampleData.InitChats(context);
+                SampleData.InitMessages(context);
             }
             host.Run();
         }

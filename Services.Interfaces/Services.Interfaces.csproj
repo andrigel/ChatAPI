@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Automapper.Models\Automapper.Models.csproj" />
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
     <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>

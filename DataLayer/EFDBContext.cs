@@ -33,6 +33,11 @@ namespace DataLayer
                 .WithMany(c => c.Messages)
                 .HasForeignKey(m => m.ChatId);
 
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Author)
+                .WithMany(a => a.Messages)
+                .HasForeignKey(m => m.AuthorId);
+
             modelBuilder.Entity<UserChat>()
                 .HasOne(uc => uc.User)
                 .WithMany(u => u.UserChats)

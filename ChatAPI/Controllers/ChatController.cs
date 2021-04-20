@@ -13,10 +13,10 @@ namespace ChatAPI.Controllers
     public class ChatController : Controller
     {
         private readonly IChatRepository _chatRep;
+        const string cId = "6f9619ff-8b86-d011-b42d-00cf4fc964ff";
         public ChatController(IChatRepository chatRep)
         {
             _chatRep = chatRep;
-
         }
 
         [Authorize]
@@ -56,8 +56,8 @@ namespace ChatAPI.Controllers
         public async Task<IActionResult> GetMessages(Guid chatId, int howMany = 20, int part = 0)
         {
             var userId = User.Claims.ToList()[0].Value;
-            await _chatRep.GetMessagesForUser(userId, chatId, howMany, part);
-            return Ok();
+            return Json(await _chatRep.GetMessagesForUser(userId, new Guid(cId), howMany, part));
+            
         }
     }
 }

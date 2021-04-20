@@ -1,25 +1,18 @@
 using ChatAPI.Options;
 using DataLayer;
+using AutoMapper;
 using DataLayer.Entityes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Services.Implementations;
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ChatAPI
 {
@@ -46,7 +39,7 @@ namespace ChatAPI
             services.AddTransient<IAccountRepository, EFAccountRepository>();
             services.AddTransient<IChatRepository, EFChatRepository>();
             services.AddTransient<IMessageRepository, EFMessageRepository>();
-
+ 
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,6 +63,7 @@ namespace ChatAPI
 
             services.AddControllers();
             services.AddSwaggerDocumentation();
+            services.AddAutoMapper(typeof(AutoMapping));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
